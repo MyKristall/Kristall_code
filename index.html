@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Кристалл Души — Калькулятор</title>
+  <style>
+    body{
+      margin:0;
+      font-family:system-ui,Arial,sans-serif;
+      background:#0f1220;
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      padding:20px;
+    }
+    .wrap{max-width:420px;width:100%;}
+    h1{text-align:center;margin-bottom:10px;font-weight:700;}
+    .panel{
+      background:#131937;
+      border-radius:12px;
+      padding:16px;
+      margin-bottom:20px;
+      box-shadow:0 4px 12px rgba(0,0,0,.4);
+    }
+    label{display:block;margin-bottom:6px;font-size:14px;}
+    input[type="date"]{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #555;
+      background:#fff;color:#000;font-size:16px;
+    }
+    .controls{text-align:center;margin-top:12px;}
+    button{
+      padding:10px 22px;border-radius:8px;border:none;
+      font-size:16px;font-weight:600;
+      cursor:pointer;
+      margin:5px;
+    }
+    .primary{background:#4a90e2;color:#fff;}
+    .secondary{background:#6a6a6a;color:#fff;}
+    .vy{margin-top:12px;font-size:16px;text-align:center;}
+
+    /* Матрица */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin:20px 0;
+    }
+    .cell{
+      position:relative;
+      aspect-ratio:1/1;
+      border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;font-size:28px;color:#000;
+      border:2px solid rgba(0,0,0,.15);
+      box-shadow:0 6px 12px rgba(0,0,0,.25);
+    }
+    .cell small{
+      position:absolute;left:6px;top:4px;
+      font:700 11px/1 system-ui;color:rgba(0,0,0,.65);
+    }
+
+    /* Цвета */
+    .c1{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#ff6a6a,#e51e1e);}
+    .c2{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#ffb266,#ff7f1f);}
+    .c3{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#ffe88a,#ffd025);}
+    .c4{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#d8ff7e,#a7ef38);}
+    .c5{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),transparent 70%),linear-gradient(#4fc06b,#1b7a39);}
+    .c6{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),transparent 70%),linear-gradient(#9be7e4,#50d4cf);}
+    .c7{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),transparent 70%),linear-gradient(#7eb0ff,#2f69ff);}
+    .c8{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),transparent 70%),linear-gradient(#cfe8ff,#9bd0ff);}
+    .c9{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),transparent 70%),linear-gradient(#b98bf0,#7f46d7);}
+    .c10{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#f6b0e7,#d47fcf);}
+    .c11{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.6),transparent 70%),linear-gradient(#ff91c7,#ff4ca3);}
+    .c12{background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.65),transparent 70%),linear-gradient(#ffd3df,#ffb6cf);}
+    
+    .codes{background:#131937;padding:16px;border-radius:12px;margin-top:16px;}
+    .codes h3{margin:0 0 10px;font-size:16px;text-align:center;}
+    .codes p{margin:6px 0;font-size:15px;text-align:center;}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="capture">
+    <h1>Кристалл Души — Калькулятор</h1>
+    <div class="panel">
+      <label for="date">Дата рождения</label>
+      <input type="date" id="date"/>
+      <div class="controls">
+        <button class="primary" id="calcBtn">Рассчитать</button>
+        <button class="secondary" id="pdfBtn">Скачать PDF</button>
+      </div>
+    </div>
+    <div id="vy" class="vy"></div>
+    <div id="matrix" class="grid"></div>
+    <div class="codes" id="codes"></div>
+  </div>
+
+  <!-- html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  
+  <script>
+    const colors=[,"c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12"];
+
+    function reduce12(n){while(n>12)n=[...(""+n)].reduce((a,b)=>a+ +b,0);return n||12;}
+
+    function calc(){
+      let val=document.getElementById("date").value;
+      if(!val)return;
+      let [Y,M,D]=val.split("-");
+      let day=+D,mon=+M;
+      let year=Y.split("").reduce((a,b)=>a+ +b,0);
+      let P=[,reduce12(day),reduce12(mon),reduce12(year)];
+      P[4]=reduce12(P[1]+P[2]); P[5]=reduce12(P[1]+P[3]); P[6]=reduce12(P[2]+P[3]);
+      P[7]=reduce12(P[4]+P[5]); P[8]=reduce12(P[4]+P[6]); P[9]=reduce12(P[5]+P[6]);
+      P[10]=reduce12(P[7]+P[8]); P[11]=reduce12(P[7]+P[9]); P[12]=reduce12(P[8]+P[9]);
+
+      document.getElementById("vy").innerHTML=`Уровень Высшего Я: <b>${day+mon+year}</b>`;
+
+      let mtx="";
+      [[10,11,12],[7,8,9],[4,5,6],[1,2,3]].forEach(row=>{
+        row.forEach(i=>{
+          mtx+=`<div class="cell ${colors[P[i]]}"><small>П${i}</small>${P[i]}</div>`;
+        });
+      });
+      document.getElementById("matrix").innerHTML=mtx;
+
+      let torsion=[P[7],P[4],P[11]];
+      let light=[P[5],P[8],P[4]];
+      let soul=[P[3],P[5],P[11]];
+      document.getElementById("codes").innerHTML=`
+        <h3>Троичные коды</h3>
+        <p>Активация торсионного поля: ${torsion.join(", ")}</p>
+        <p>Активация тела света: ${light.join(", ")}</p>
+        <p>Активация индивидуальной души: ${soul.join(", ")}</p>
+      `;
+    }
+    document.getElementById("calcBtn").onclick=calc;
+
+    document.getElementById("pdfBtn").onclick=()=>{
+      const element=document.getElementById("capture");
+      html2pdf().from(element).set({
+        margin:0.5,
+        filename:"Kristall_Dushi.pdf",
+        html2canvas:{scale:2},
+        jsPDF:{unit:"in",format:"a4",orientation:"portrait"}
+      }).save();
+    };
+  </script>
+</body>
+</html>
