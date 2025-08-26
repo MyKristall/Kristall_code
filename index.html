@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Раскрой свой КРИСТАЛЛ ДУШИ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f1220;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    h1 span.glow {
+      color: #FFD700;
+      text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+    }
+    .panel {
+      background: #1a1f36;
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    label { display: block; margin: 10px 0 5px; }
+    input, select {
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    button {
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      color: white;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: scale(1.05); }
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 80px);
+      gap: 10px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .cell {
+      width: 80px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px;
+      font-size: 20px; font-weight: bold;
+      color: black;
+    }
+    .instructions {
+      text-align: left;
+      margin: 20px auto;
+      max-width: 420px;
+    }
+    .block {
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 15px;
+      line-height: 1.4em;
+    }
+    .red { background: #3b1f1f; border-left: 5px solid #ff4d4d; }
+    .blue { background: #1f2b3b; border-left: 5px solid #4da6ff; }
+    .green { background: #1f3b2b; border-left: 5px solid #4dff88; }
+  </style>
+</head>
+<body>
+  <h1>Раскрой свой <span class="glow">КРИСТАЛЛ ДУШИ</span></h1>
+
+  <div class="panel">
+    <label>Дата рождения:</label>
+    <input type="date" id="birthdate">
+
+    <label>Язык:</label>
+    <select id="lang">
+      <option value="auto">Auto</option>
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+    </select><br>
+
+    <button onclick="calculate()">Рассчитать</button>
+    <button onclick="downloadPDF()">Скачать PDF</button>
+  </div>
+
+  <h2 id="vy-level">Уровень Высшего Я:</h2>
+
+  <div class="matrix" id="matrix"></div>
+
+  <div class="instructions">
+    <h2>Инструкция к кодам</h2>
+    <div class="block red" id="inst1"></div>
+    <div class="block blue" id="inst2"></div>
+    <div class="block green" id="inst3"></div>
+  </div>
+
+<script>
+  const colors = {
+    1: "red", 2: "orange", 3: "yellow",
+    4: "limegreen", 5: "green", 6: "turquoise",
+    7: "blue", 8: "lightblue", 9: "violet",
+    10: "orchid", 11: "deeppink", 12: "lightpink"
+  };
+
+  function reduce12(n) {
+    while (n > 12) n = n.toString().split('').reduce((a,b)=>a+ +b,0);
+    return n;
+  }
+
+  function calculate() {
+    let date = document.getElementById("birthdate").value;
+    if (!date) return;
+    let [y, m, d] = date.split("-");
+    d = parseInt(d); m = parseInt(m); y = parseInt(y);
+
+    // Матрица
+    let P1 = reduce12(d);
+    let P2 = reduce12(m);
+    let yearSum = y.toString().split("").reduce((a,b)=>a+ +b,0);
+    let P3 = reduce12(yearSum);
+    let P4 = reduce12(P1+P2);
+    let P5 = reduce12(P1+P3);
+    let P6 = reduce12(P2+P3);
+    let P7 = reduce12(P4+P5);
+    let P8 = reduce12(P4+P6);
+    let P9 = reduce12(P5+P6);
+    let P10 = reduce12(P7+P8);
+    let P11 = reduce12(P7+P9);
+    let P12 = reduce12(P8+P9);
+
+    // Уровень ВЯ
+    let century = Math.floor(y/100);
+    let decade = reduce12(y % 100);
+    let VY = d + m + century + decade;
+
+    document.getElementById("vy-level").innerText = "Уровень Высшего Я: " + VY;
+
+    let cells = [P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12];
+    let matrixHTML = "";
+    for (let i=9;i<12;i++) matrixHTML += `<div class="cell" style="background:${colors[cells[i]]}">${cells[i]}</div>`;
+    for (let i=6;i<9;i++) matrixHTML += `<div class="cell" style="background:${colors[cells[i]]}">${cells[i]}</div>`;
+    for (let i=3;i<6;i++) matrixHTML += `<div class="cell" style="background:${colors[cells[i]]}">${cells[i]}</div>`;
+    for (let i=0;i<3;i++) matrixHTML += `<div class="cell" style="background:${colors[cells[i]]}">${cells[i]}</div>`;
+    document.getElementById("matrix").innerHTML = matrixHTML;
+
+    // Инструкция
+    document.getElementById("inst1").innerHTML = "<b>1) АКТИВАЦИЯ КРИСТАЛЛА ДУШИ</b><br>Вдыхай свет — выдыхай любовь, затем вдыхай силу — выдыхай волю. Простукивай точку Тимуса со звуком «аа».";
+    document.getElementById("inst2").innerHTML = "<b>2) ЗАПУСК ТОРСИОННОГО ПОЛЯ</b><br>Вращение вокруг своей оси: верхняя воронка руки вверх (по часовой), нижняя руки вниз (против часовой), гармонизация — руки в намасте и прыжки.";
+    document.getElementById("inst3").innerHTML = "<b>3) ИНТЕГРАЦИЯ ТЕЛА СВЕТА</b><br>Круги руками вперёд, круги руками назад, затем фиксация в намасте с мягким нажатием ладонями.";
+  }
+
+  function downloadPDF() {
+    alert("PDF подключу после финальной проверки текстов.");
+  }
+</script>
+</body>
+</html>
