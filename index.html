@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Раскрой свой КРИСТАЛЛ ДУШИ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1020; --panel:#141933; --ink:#eaf2ff; --muted:#9fb0d6;
+  --radius:18px; --gap:14px; --shadow:0 14px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; font-family:Manrope,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif; color:var(--ink);
+  background: radial-gradient(1200px 800px at 70% -10%, #1b2250 0%, transparent 60%), linear-gradient(180deg,#0b0e1b,#0d1229 45%,#0c0f22);
+}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px 36px}
+.hero{text-align:center;padding:28px 16px 8px}
+.hero h1{margin:0;font-weight:800;font-size:clamp(26px,5.6vw,48px);letter-spacing:.5px;line-height:1.15}
+.glow{display:inline-block;margin-top:8px;font-size:clamp(28px,6.2vw,52px);font-weight:800;letter-spacing:1px;color:#ffea9e;
+  text-shadow:0 0 12px rgba(255,239,140,.65),0 0 28px rgba(255,220,90,.35),0 0 48px rgba(255,215,64,.25)}
+.card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+
+/* форма */
+.controls{display:grid;gap:14px;grid-template-columns:1fr 1fr;align-items:end}
+.field{display:flex;flex-direction:column;gap:8px}
+label{font-size:14px;color:var(--muted)}
+input[type="date"],select{
+  width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  border-radius:14px;padding:14px 14px;color:var(--ink);outline:none
+}
+select{appearance:none;background-image:
+  linear-gradient(45deg,transparent 50%,#93a4d4 50%),linear-gradient(135deg,#93a4d4 50%,transparent 50%);
+  background-position: calc(100% - 22px) calc(1em + 2px), calc(100% - 16px) calc(1em + 2px);
+  background-size:6px 6px,6px 6px; background-repeat:no-repeat}
+.langRow{display:flex;gap:10px;align-items:end}
+
+/* кнопки — премиум */
+.btn{position:relative;display:inline-flex;justify-content:center;align-items:center;gap:10px;
+  font-weight:800;letter-spacing:.3px;border:0;cursor:pointer;user-select:none;padding:14px 22px;border-radius:14px;
+  transition:.25s transform,.25s box-shadow,.25s background-color}
+.btn:active{transform:translateY(1px)}
+.btn-primary{color:#0b132b;background:linear-gradient(135deg,#71e2ff 0%,#7afcc5 100%);
+  box-shadow:0 10px 28px rgba(61,209,255,.25), inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-primary:hover{box-shadow:0 14px 36px rgba(61,209,255,.33), inset 0 1px 0 rgba(255,255,255,.55)}
+.btn-ghost{color:var(--ink);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14)}
+.btn-ghost:hover{background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.05))}
+.btn-en{padding:12px 14px;font-weight:800;background:linear-gradient(135deg,#e1e8ff 0%,#c1d9ff 100%);color:#0b1333;border:0;border-radius:12px}
+.btn-en:hover{filter:brightness(1.05)}
+.btn-pdf[disabled]{opacity:.5;cursor:not-allowed}
+
+/* уровень ВЯ */
+.level{margin:22px auto 14px;text-align:center}
+.level b{font-size:22px}
+
+/* матрица */
+.grid{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.cell{height:96px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#0e1230;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.25), var(--shadow);
+  background-image: radial-gradient(circle at 50% 45%, rgba(255,255,255,.65), rgba(255,255,255,0) 55%)}
+.c10{background-color:#d7a7e6}.c11{background-color:#ff97c6}.c12{background-color:#ffd7dc}
+.c7{background-color:#4974ff}.c8{background-color:#c8e6ff}.c9{background-color:#a87ef3}
+.c4{background-color:#baff66}.c5{background-color:#3aa562}.c6{background-color:#94eef1}
+.c1{background-color:#ff6161}.c2{background-color:#ffa74a}.c3{background-color:#ffe666}
+
+/* инструкции */
+.section{margin-top:18px}
+.section h2{margin:0 0 12px 4px}
+.kit{border-radius:16px;padding:18px;border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.03));box-shadow:var(--shadow)}
+.kit + .kit{margin-top:14px}
+.kit h3{margin:0 0 10px;font-size:18px;letter-spacing:.4px}
+.kit.red h3{color:#ff6f7d}.kit.blue h3{color:#6fb6ff}.kit.green h3{color:#4fe0a2}
+.kit p{margin:8px 0 0;line-height:1.58}
+.badge{display:inline-flex;align-items:center;justify-content:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.12);font-weight:800;letter-spacing:.4px}
+
+/* адаптив */
+@media (max-width:720px){.controls{grid-template-columns:1fr}.grid .cell{height:84px;font-size:26px}}
+</style>
+</head>
+<body>
+  <div class="hero">
+    <h1 data-i="titleTop">Раскрой свой</h1>
+    <div class="glow" data-i="titleGlow">КРИСТАЛЛ ДУШИ</div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <div class="controls">
+        <div class="field">
+          <label data-i="dob">Дата рождения</label>
+          <input id="dob" type="date" />
+        </div>
+
+        <div class="field">
+          <label data-i="lang">Язык</label>
+          <div class="langRow">
+            <select id="lang">
+              <option value="auto" selected>Auto</option>
+              <option value="ru">Русский</option>
+              <option value="en">English</option>
+            </select>
+            <button class="btn-en" id="quickEn" type="button">EN</button>
+            <button class="btn btn-primary" id="calcBtn" type="button" data-i="calc">Рассчитать</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="level" id="vyWrap" hidden>
+        <span data-i="vy">Уровень Высшего Я</span>: <b id="vyVal">—</b>
+      </div>
+
+      <div class="grid" id="grid" hidden>
+        <!-- верхний ряд -->
+        <div class="cell c10" id="P10">—</div>
+        <div class="cell c11" id="P11">—</div>
+        <div class="cell c12" id="P12">—</div>
+        <!-- второй ряд -->
+        <div class="cell c7" id="P7">—</div>
+        <div class="cell c8" id="P8">—</div>
+        <div class="cell c9" id="P9">—</div>
+        <!-- третий ряд -->
+        <div class="cell c4" id="P4">—</div>
+        <div class="cell c5" id="P5">—</div>
+        <div class="cell c6" id="P6">—</div>
+        <!-- нижний ряд -->
+        <div class="cell c1" id="P1">—</div>
+        <div class="cell c2" id="P2">—</div>
+        <div class="cell c3" id="P3">—</div>
+      </div>
+
+      <div class="section" id="instWrap" hidden>
+        <h2 data-i="instTitle">Инструкция к кодам</h2>
+
+        <div class="kit red" id="kit1">
+          <h3><span data-i="k1title">1) АКТИВАЦИЯ КРИСТАЛЛА ДУШИ</span> <span class="badge" id="nBadge">N1 / N2 / N3</span></h3>
+          <p data-i="k1p1">«Вдыхаю Свет — Выдыхаю Любовь». Ладони в намасте на груди. На вдохе веди внимание из центра головы в Высшее сердце (Тимус), на выдохе — раскрывай руки и излучай золотой свет.</p>
+          <p data-i="k1p2">«Вдыхаю Силу — Выдыхаю Волю». На вдохе поднимай огненный поток из солнечного сплетения к Тимусу, на выдохе — через распахнутые руки излучай золотой свет.</p>
+          <p data-i="k1p3">Представь в груди сияющий Кристалл-портал; простучи точку Тимуса со звуком «аа».</p>
+          <p id="nVals"></p>
+        </div>
+
+        <div class="kit blue" id="kit2">
+          <h3><span data-i="k2title">2) ЗАПУСК ТОРСИОННОГО ПОЛЯ</span> <span class="badge" id="tBadge">T1 / T2 / T3</span></h3>
+          <p data-i="k2p1">Верхняя воронка: вращение вокруг своей оси <i>по часовой стрелке</i>, руки вверх.</p>
+          <p data-i="k2p2">Нижняя воронка: вращение вокруг своей оси <i>против часовой стрелки</i>, руки вниз.</p>
+          <p data-i="k2p3">Гармонизация потоков земли и неба: сложи руки в намасте и сделай <b>прыжки</b> (или быстрые перекаты с пятки на носок).</p>
+          <p id="tVals"></p>
+        </div>
+
+        <div class="kit green" id="kit3">
+          <h3><span data-i="k3title">3) ИНТЕГРАЦИЯ ТЕЛА СВЕТА</span> <span class="badge" id="cBadge">C1 / C2 / C3</span></h3>
+          <p data-i="k3p1">Одновременные круги руками вперёд.</p>
+          <p data-i="k3p2">Одновременные круги руками назад.</p>
+          <p data-i="k3p3">Фиксация: ладони в намасте на груди, мягкое надавливание ладонями друг на друга.</p>
+          <p id="cVals"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- PDF -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script>
+/* ===== i18n ===== */
+const I18N = {
+  ru:{
+    titleTop:"Раскрой свой", titleGlow:"КРИСТАЛЛ ДУШИ",
+    dob:"Дата рождения", lang:"Язык", calc:"Рассчитать", vy:"Уровень Высшего Я",
+    instTitle:"Инструкция к кодам",
+    k1title:"1) АКТИВАЦИЯ КРИСТАЛЛА ДУШИ",
+    k1p1:"«Вдыхаю Свет — Выдыхаю Любовь». Ладони в намасте на груди. На вдохе веди внимание из центра головы в Высшее сердце (Тимус), на выдохе — раскрывай руки и излучай золотой свет.",
+    k1p2:"«Вдыхаю Силу — Выдыхаю Волю». На вдохе поднимай огненный поток из солнечного сплетения к Тимусу, на выдохе — через распахнутые руки излучай золотой свет.",
+    k1p3:"Представь в груди сияющий Кристалл-портал; простучи точку Тимуса со звуком «аа».",
+    k2title:"2) ЗАПУСК ТОРСИОННОГО ПОЛЯ",
+    k2p1:"Верхняя воронка: вращение вокруг своей оси по часовой стрелке, руки вверх.",
+    k2p2:"Нижняя воронка: вращение вокруг своей оси против часовой стрелки, руки вниз.",
+    k2p3:"Гармонизация потоков земли и неба: сложи руки в намасте и сделай прыжки (или быстрые перекаты с пятки на носок).",
+    k3title:"3) ИНТЕГРАЦИЯ ТЕЛА СВЕТА",
+    k3p1:"Одновременные круги руками вперёд.",
+    k3p2:"Одновременные круги руками назад.",
+    k3p3:"Фиксация: ладони в намасте на груди, мягкое надавливание ладонями друг на друга.",
+    pdf:"Скачать PDF"
+  },
+  en:{
+    titleTop:"Reveal your", titleGlow:"SOUL CRYSTAL",
+    dob:"Date of birth", lang:"Language", calc:"Calculate", vy:"Higher Self Level",
+    instTitle:"Instructions for the codes",
+    k1title:"1) SOUL CRYSTAL ACTIVATION",
+    k1p1:"“Inhale Light — Exhale Love.” Palms in namaste at the chest. Inhale from the head center into the Higher Heart (thymus); exhale while opening the arms and radiating golden light.",
+    k1p2:"“Inhale Power — Exhale Will.” Inhale the fiery stream from the solar plexus to the thymus; exhale golden light through open arms.",
+    k1p3:"Visualize a luminous inner Crystal-portal; then tap the thymus while sounding “aa”.",
+    k2title:"2) TORSION FIELD LAUNCH",
+    k2p1:"Upper vortex: rotation around your axis clockwise, arms up.",
+    k2p2:"Lower vortex: rotation around your axis counter-clockwise, arms down.",
+    k2p3:"Harmonization of earth and heaven flows: palms in namaste and make small jumps (or quick heel-to-toe rolls).",
+    k3title:"3) LIGHT BODY INTEGRATION",
+    k3p1:"Both arms circles forward (simultaneously).",
+    k3p2:"Both arms circles backward (simultaneously).",
+    k3p3:"Fixation: palms in namaste on the chest, gentle pressing palm to palm.",
+    pdf:"Download PDF"
+  }
+};
+const $ = s=>document.querySelector(s);
+function uiLang(){
+  const sel = $('#lang').value;
+  if(sel!=='auto') return sel;
+  return (navigator.language||'en').toLowerCase().startsWith('ru') ? 'ru' : 'en';
+}
+function applyLang(){
+  const L = uiLang(), t = I18N[L];
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    el.textContent = t[el.getAttribute('data-i')] || el.textContent;
+  });
+}
+
+/* ===== math helpers ===== */
+const sumDigits = n => String(Math.abs(n)).split('').reduce((a,b)=>a+ +b,0);
+const to12 = n => { while(n>12){ n=sumDigits(n); } return n || 12; };
+
+/* ===== positions & codes (утверждённые формулы) ===== */
+function buildPositions(iso){
+  const [Y,M,D] = iso.split('-').map(Number);
+  const P1 = to12(sumDigits(D));
+  const P2 = to12(M);
+  const P3 = to12(sumDigits(Y));
+
+  const P4 = to12(P1+P2);
+  const P5 = to12(P1+P3);
+  const P6 = to12(P2+P3);
+
+  const P7 = to12(P4+P5);
+  const P8 = to12(P4+P6);
+  const P9 = to12(P5+P6);
+
+  const P10 = to12(P7+P8);
+  const P11 = to12(P7+P9);
+  const P12 = to12(P8+P9);
+
+  return {P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12, Y,M,D};
+}
+function computeVY({Y,M,D}){
+  const century = Math.floor(Y/100);        // 19 / 20
+  const tens    = Math.floor((Y%100)/10);   // 0..9
+  return D + M + century + tens;
+}
+function codes(P){
+  const N1 = P.P5;
+  const N2 = P.P8;
+  const N3 = to12(P.P5 + P.P8);
+
+  const T1 = to12(P.P8 + P.P10 + P.P12);
+  const T2 = to12(P.P1 + P.P3 + P.P5);
+  const T3 = to12(T1 + T2);
+
+  const C1 = to12(P.P2 + P.P4 + P.P6);   // вперёд
+  const C2 = to12(P.P7 + P.P9 + P.P11);  // назад
+  const C3 = to12(C1 + C2);
+
+  return {N1,N2,N3,T1,T2,T3,C1,C2,C3};
+}
+
+/* ===== render ===== */
+function drawGrid(P){
+  const seq = ['P10','P11','P12','P7','P8','P9','P4','P5','P6','P1','P2','P3'];
+  seq.forEach(id=>{ document.getElementById(id).textContent = P[id]; });
+}
+function drawInstr(P){
+  const L = uiLang(), t = I18N[L];
+  $('#kit1 h3').firstChild && ($('#kit1 h3').firstChild.textContent = t.k1title);
+  $('#kit2 h3').firstChild && ($('#kit2 h3').firstChild.textContent = t.k2title);
+  $('#kit3 h3').firstChild && ($('#kit3 h3').firstChild.textContent = t.k3title);
+  $('#kit1 p[data-i="k1p1"]').textContent = t.k1p1;
+  $('#kit1 p[data-i="k1p2"]').textContent = t.k1p2;
+  $('#kit1 p[data-i="k1p3"]').textContent = t.k1p3;
+  $('#kit2 p[data-i="k2p1"]').textContent = t.k2p1;
+  $('#kit2 p[data-i="k2p2"]').textContent = t.k2p2;
+  $('#kit2 p[data-i="k2p3"]').textContent = t.k2p3;
+  $('#kit3 p[data-i="k3p1"]').textContent = t.k3p1;
+  $('#kit3 p[data-i="k3p2"]').textContent = t.k3p2;
+  $('#kit3 p[data-i="k3p3"]').textContent = t.k3p3;
+
+  const C = codes(P);
+  const fmt = (l, a,b,c) => l==='ru'
+    ? `${a} раз · ${b} раз · ${c} раз`
+    : `${a} times · ${b} times · ${c} times`;
+
+  $('#nBadge').textContent = 'N1 / N2 / N3';
+  $('#tBadge').textContent = 'T1 / T2 / T3';
+  $('#cBadge').textContent = 'C1 / C2 / C3';
+
+  $('#nVals').textContent = (L==='ru')
+    ? `N1 = ${C.N1} раз · N2 = ${C.N2} раз · N3 = ${C.N3} раз`
+    : `N1 = ${C.N1} times · N2 = ${C.N2} times · N3 = ${C.N3} times`;
+
+  $('#tVals').textContent = (L==='ru')
+    ? `T1 = ${C.T1} раз · T2 = ${C.T2} раз · T3 = ${C.T3} раз`
+    : `T1 = ${C.T1} times · T2 = ${C.T2} times · T3 = ${C.T3} times`;
+
+  $('#cVals').textContent = (L==='ru')
+    ? `C1 = ${C.C1} раз · C2 = ${C.C2} раз · C3 = ${C.C3} раз`
+    : `C1 = ${C.C1} times · C2 = ${C.C2} times · C3 = ${C.C3} times`;
+}
+
+/* ===== interactions ===== */
+const els = {
+  dob: $('#dob'), lang: $('#lang'), quickEn: $('#quickEn'),
+  calc: $('#calcBtn'), grid: $('#grid'), inst: $('#instWrap'),
+  vyWrap: $('#vyWrap'), vyVal: $('#vyVal')
+};
+function recalc(){
+  const iso = els.dob.value;
+  if(!iso) return;
+  const P = buildPositions(iso);
+  const vy = computeVY(P);
+  drawGrid(P);
+  drawInstr(P);
+  els.vyVal.textContent = vy;
+  els.grid.hidden = false; els.inst.hidden = false; els.vyWrap.hidden = false;
+}
+els.calc.addEventListener('click', recalc);
+els.lang.addEventListener('change', ()=>{ applyLang(); if(!els.grid.hidden) recalc(); });
+$('#quickEn').addEventListener('click', ()=>{ els.lang.value='en'; applyLang(); if(!els.grid.hidden) recalc(); });
+
+/* init */
+(function init(){
+  // по умолчанию поставим пример 1969-05-22
+  els.dob.value = '1969-05-22';
+  applyLang(); recalc();
+})();
+</script>
+</body>
+</html>
