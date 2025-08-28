@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>КРИСТАЛЛ ДУШИ</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #a67c00;
+    }
+    .container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    label, select, input, button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+    button {
+      background: #a67c00;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #8c6700;
+    }
+    .instructions {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title"></h1>
+
+    <label for="dob" id="dobLabel"></label>
+    <input type="date" id="dob">
+
+    <label for="lang" id="langLabel"></label>
+    <select id="lang">
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="it">Italiano</option>
+    </select>
+
+    <button id="calc"></button>
+    <button id="pdf"></button>
+
+    <div class="instructions">
+      <h3 id="instructionTitle"></h3>
+      <p id="k1text"></p>
+      <p id="k2text"></p>
+      <p id="k3text"></p>
+      <p><em id="pdfNote"></em></p>
+    </div>
+  </div>
+
+  <script>
+    const i18n = {
+      ru: {
+        title: "Раскрой свой КРИСТАЛЛ ДУШИ",
+        dob: "Дата рождения",
+        lang: "Язык",
+        calc: "Рассчитать",
+        pdf: "Скачать PDF",
+        instructionTitle: "Инструкция к кодам",
+        k1text: "1) АКТИВАЦИЯ КОНТАКТА С ДУШОЙ (соединение разума и сердца)",
+        k2text: "2) АКТИВАЦИЯ МЕРКАБА (духовное пробуждение в физическом теле)",
+        k3text: "3) ЗАПУСК ТОРОИДАЛЬНОГО ПОЛЯ (полная интеграция физического тела с телом Света)",
+        pdfNote: "PDF включает матрицу (с уровнем ВЯ) и полные тексты трёх пунктов."
+      },
+      en: {
+        title: "Unveil your SOUL CRYSTAL",
+        dob: "Date of Birth",
+        lang: "Language",
+        calc: "Calculate",
+        pdf: "Download PDF",
+        instructionTitle: "Instructions for the codes",
+        k1text: "1) ACTIVATION OF CONTACT WITH THE SOUL (union of mind and heart)",
+        k2text: "2) ACTIVATION OF MERKABA (spiritual awakening in the physical body)",
+        k3text: "3) ACTIVATION OF THE TOROIDAL FIELD (full integration of the physical body with the body of Light)",
+        pdfNote: "The PDF includes the matrix (with Higher Self level) and the full texts of the three points."
+      },
+      de: {
+        title: "Entfalte deinen SEELENKRISTALL",
+        dob: "Geburtsdatum",
+        lang: "Sprache",
+        calc: "Berechnen",
+        pdf: "PDF herunterladen",
+        instructionTitle: "Anleitung zu den Codes",
+        k1text: "1) AKTIVIERUNG DES KONTAKTS MIT DER SEELE (Verbindung von Verstand und Herz)",
+        k2text: "2) AKTIVIERUNG DER MERKABA (spirituelles Erwachen im physischen Körper)",
+        k3text: "3) AKTIVIERUNG DES TOROIDFELDES (vollständige Integration des physischen Körpers mit dem Lichtkörper)",
+        pdfNote: "Das PDF enthält die Matrix (mit der Ebene des Höheren Selbst) und die vollständigen Texte der drei Punkte."
+      },
+      fr: {
+        title: "Révèle ton CRISTAL DE L'ÂME",
+        dob: "Date de naissance",
+        lang: "Langue",
+        calc: "Calculer",
+        pdf: "Télécharger le PDF",
+        instructionTitle: "Instructions pour les codes",
+        k1text: "1) ACTIVATION DU CONTACT AVEC L'ÂME (union de l'esprit et du cœur)",
+        k2text: "2) ACTIVATION DE LA MERKABA (éveil spirituel dans le corps physique)",
+        k3text: "3) ACTIVATION DU CHAMP TOROÏDAL (intégration complète du corps physique avec le corps de lumière)",
+        pdfNote: "Le PDF inclut la matrice (avec le niveau du Soi Supérieur) et les textes complets des trois points."
+      },
+      es: {
+        title: "Revela tu CRISTAL DEL ALMA",
+        dob: "Fecha de nacimiento",
+        lang: "Idioma",
+        calc: "Calcular",
+        pdf: "Descargar PDF",
+        instructionTitle: "Instrucciones para los códigos",
+        k1text: "1) ACTIVACIÓN DEL CONTACTO CON EL ALMA (unión de la mente y el corazón)",
+        k2text: "2) ACTIVACIÓN DE LA MERKABA (despertar espiritual en el cuerpo físico)",
+        k3text: "3) ACTIVACIÓN DEL CAMPO TOROIDAL (integración completa del cuerpo físico con el cuerpo de luz)",
+        pdfNote: "El PDF incluye la matriz (con el nivel del Yo Superior) y los textos completos de los tres puntos."
+      },
+      it: {
+        title: "Rivela il tuo CRISTALLO DELL'ANIMA",
+        dob: "Data di nascita",
+        lang: "Lingua",
+        calc: "Calcola",
+        pdf: "Scarica PDF",
+        instructionTitle: "Istruzioni per i codici",
+        k1text: "1) ATTIVAZIONE DEL CONTATTO CON L'ANIMA (unione della mente e del cuore)",
+        k2text: "2) ATTIVAZIONE DELLA MERKABA (risveglio spirituale nel corpo fisico)",
+        k3text: "3) ATTIVAZIONE DEL CAMPO TOROIDALE (piena integrazione del corpo fisico con il corpo di luce)",
+        pdfNote: "Il PDF include la matrice (con il livello del Sé Superiore) e i testi completi dei tre punti."
+      }
+    };
+
+    function updateTexts() {
+      const lang = document.getElementById("lang").value;
+      const t = i18n[lang];
+      document.getElementById("title").innerText = t.title;
+      document.getElementById("dobLabel").innerText = t.dob;
+      document.getElementById("langLabel").innerText = t.lang;
+      document.getElementById("calc").innerText = t.calc;
+      document.getElementById("pdf").innerText = t.pdf;
+      document.getElementById("instructionTitle").innerText = t.instructionTitle;
+      document.getElementById("k1text").innerText = t.k1text;
+      document.getElementById("k2text").innerText = t.k2text;
+      document.getElementById("k3text").innerText = t.k3text;
+      document.getElementById("pdfNote").innerText = t.pdfNote;
+    }
+
+    // PDF генерация
+    document.getElementById("pdf").addEventListener("click", () => {
+      const lang = document.getElementById("lang").value;
+      const t = i18n[lang];
+      const dobValue = document.getElementById("dob").value;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(18);
+      doc.text(t.title, 20, 20);
+
+      if (dobValue) {
+        doc.setFontSize(12);
+        doc.text(`${t.dob}: ${dobValue}`, 20, 35);
+      }
+
+      doc.setFontSize(12);
+      doc.text(t.instructionTitle, 20, 50);
+      doc.text(t.k1text, 20, 60);
+      doc.text(t.k2text, 20, 70);
+      doc.text(t.k3text, 20, 80);
+
+      doc.setFontSize(10);
+      doc.text(t.pdfNote, 20, 100);
+
+      doc.save("soul_crystal.pdf");
+    });
+
+    document.getElementById("lang").addEventListener("change", updateTexts);
+    window.onload = updateTexts;
+  </script>
+</body>
+</html>
